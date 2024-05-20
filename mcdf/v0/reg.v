@@ -38,20 +38,20 @@ module ctrl_regs(
     input  [`CMD_DATA_WIDTH-1:0]    pwdata_i;
     output [`CMD_DATA_WIDTH-1:0]    prdata_o;
 
-    input  [`FIFO_MARGIN_WIDTH-1:0] slv0_margin_i;
+    input  [`FIFO_MARGIN_WIDTH-1:0] slv0_margin_i;  // channel to this input, fifo remaining
     input  [`FIFO_MARGIN_WIDTH-1:0] slv1_margin_i;
     input  [`FIFO_MARGIN_WIDTH-1:0] slv2_margin_i;
-    output [`PAC_LEN_WIDTH-1:0]     slv0_pkglen_o;
+    output [`PAC_LEN_WIDTH-1:0]     slv0_pkglen_o; // to formatter
     output [`PAC_LEN_WIDTH-1:0]     slv1_pkglen_o;
     output [`PAC_LEN_WIDTH-1:0]     slv2_pkglen_o;
-    output [`PRIO_WIDTH-1:0]        slv0_prio_o;
+    output [`PRIO_WIDTH-1:0]        slv0_prio_o; // to arbiter
     output [`PRIO_WIDTH-1:0]        slv1_prio_o;
     output [`PRIO_WIDTH-1:0]        slv2_prio_o;
-    output   slv0_en_o;
+    output   slv0_en_o; // to channel
     output   slv1_en_o;
     output   slv2_en_o;
 
-    reg [`CMD_DATA_WIDTH-1:0] mem [5:0];
+    reg [`CMD_DATA_WIDTH-1:0] mem [5:0]; // 5 register
     reg [`CMD_DATA_WIDTH-1:0] cmd_data_reg;
     reg [`ADDR_WIDTH-1:0]     addr_r;
 
@@ -94,9 +94,9 @@ module ctrl_regs(
             end
         end
     end
-
+    /* reset register */
     always @ (posedge clk_i or negedge rstn_i) 	begin			//Trace fifo's margin
-        if (!rstn_i) begin
+        if (!rstn_i) begin /* asyn reset */
             mem [`SLV0_R_REG] <= 32'h00000020;   //FIFO's depth is 32
             mem [`SLV1_R_REG] <= 32'h00000020;
             mem [`SLV2_R_REG] <= 32'h00000020;

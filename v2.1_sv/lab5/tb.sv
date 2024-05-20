@@ -16,6 +16,11 @@ interface chnl_intf(input clk, input rstn);
 endinterface
 
 interface reg_intf(input clk, input rstn);
+    logic [1:0] cmd;
+    logic [`ADDR_WIDTH-1:0] cmd_addr;
+    logic [`CMD_DATA_WIDTH-1:0] cmd_data_s2m;
+    logic [`CMD_DATA_WIDTH-1:0] cmd_data_m2s;
+    
 
 endinterface
 

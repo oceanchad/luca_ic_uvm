@@ -201,6 +201,7 @@ package chnl_pkg;
         endfunction
 
         task run();
+			this.mon_trans();
         endtask
 
         task mon_trans();
